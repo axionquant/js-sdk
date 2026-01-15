@@ -1,0 +1,20 @@
+{
+  "name": "@axion/sdk",
+  "version": "1.0.0",
+  "description": "Axion SDK for Node.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+    "axios": "^1.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
+  },
+  "keywords": ["financial-data", "stocks", "crypto", "etf"],
+  "author": "Axion",
+  "license": "MIT"
+}
