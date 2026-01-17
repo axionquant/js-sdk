@@ -11,7 +11,7 @@ npm install @axionquant/sdk
 ## Quick Start
 
 ```typescript
-import { Axion } from 'axion-sdk';
+import { Axion } from '@axionquant/sdk';
 
 // Initialize with API key
 const client = new Axion('your-api-key');
@@ -276,7 +276,7 @@ try {
 This SDK is written in TypeScript and includes type definitions. Import types as needed:
 
 ```typescript
-import { Axion, ApiResponse } from 'axion-sdk';
+import { Axion, ApiResponse } from '@axionquant/sdk';
 ```
 
 ## Base URL
