@@ -3,9 +3,277 @@ import { ApiResponse } from './models';
 
 const BASE_URL = "http://localhost:3001";
 
+class BaseAPI {
+    constructor(protected client: Axion) {}
+
+    protected async _request(method: string, path: string, params: Record<string, any> = {}, data: Record<string, any> = {}, authRequired: boolean = true): Promise<ApiResponse> {
+        return this.client._request(method, path, params, data, authRequired);
+    }
+}
+
+class CreditAPI extends BaseAPI {
+    search(query: string): Promise<ApiResponse> {
+        return this._request("GET", "credit/search", { query });
+    }
+
+    ratings(entityId: string): Promise<ApiResponse> {
+        return this._request("GET", `credit/ratings/${entityId}`);
+    }
+}
+
+class ESGAPI extends BaseAPI {
+    data(ticker: string): Promise<ApiResponse> {
+        return this._request("GET", `esg/${ticker}`);
+    }
+}
+
+class ETFAPI extends BaseAPI {
+    fund(ticker: string): Promise<ApiResponse> {
+        return this._request("GET", `etfs/${ticker}/fund`);
+    }
+
+    holdings(ticker: string): Promise<ApiResponse> {
+        return this._request("GET", `etfs/${ticker}/holdings`);
+    }
+
+    exposure(ticker: string): Promise<ApiResponse> {
+        return this._request("GET", `etfs/${ticker}/exposure`);
+    }
+}
+
+class SupplyChainAPI extends BaseAPI {
+    customers(ticker: string): Promise<ApiResponse> {
+        return this._request("GET", `supply-chain/${ticker}/customers`);
+    }
+
+    peers(ticker: string): Promise<ApiResponse> {
+        return this._request("GET", `supply-chain/${ticker}/peers`);
+    }
+
+    suppliers(ticker: string): Promise<ApiResponse> {
+        return this._request("GET", `supply-chain/${ticker}/suppliers`);
+    }
+}
+
+class StocksAPI extends BaseAPI {
+    tickers(params: { country?: string, exchange?: string } = {}): Promise<ApiResponse> {
+        return this._request("GET", "stocks/tickers", params);
+    }
+
+    ticker(ticker: string): Promise<ApiResponse> {
+        return this._request("GET", `stocks/${ticker}`);
+    }
+
+    prices(ticker: string, params: { from?: string, to?: string, frame?: string } = {}): Promise<ApiResponse> {
+        return this._request("GET", `stocks/${ticker}/prices`, params);
+    }
+}
+
+class CryptoAPI extends BaseAPI {
+    tickers(params: { type?: string } = {}): Promise<ApiResponse> {
+        return this._request("GET", "crypto/tickers", params);
+    }
+
+    ticker(ticker: string): Promise<ApiResponse> {
+        return this._request("GET", `crypto/${ticker}`);
+    }
+
+    prices(ticker: string, params: { from?: string, to?: string, frame?: string } = {}): Promise<ApiResponse> {
+        return this._request("GET", `crypto/${ticker}/prices`, params);
+    }
+}
+
+class ForexAPI extends BaseAPI {
+    tickers(params: { country?: string, exchange?: string } = {}): Promise<ApiResponse> {
+        return this._request("GET", "forex/tickers", params);
+    }
+
+    ticker(ticker: string): Promise<ApiResponse> {
+        return this._request("GET", `forex/${ticker}`);
+    }
+
+    prices(ticker: string, params: { from?: string, to?: string, frame?: string } = {}): Promise<ApiResponse> {
+        return this._request("GET", `forex/${ticker}/prices`, params);
+    }
+}
+
+class FuturesAPI extends BaseAPI {
+    tickers(params: { exchange?: string } = {}): Promise<ApiResponse> {
+        return this._request("GET", "futures/tickers", params);
+    }
+
+    ticker(ticker: string): Promise<ApiResponse> {
+        return this._request("GET", `futures/${ticker}`);
+    }
+
+    prices(ticker: string, params: { from?: string, to?: string, frame?: string } = {}): Promise<ApiResponse> {
+        return this._request("GET", `futures/${ticker}/prices`, params);
+    }
+}
+
+class IndicesAPI extends BaseAPI {
+    tickers(params: { exchange?: string } = {}): Promise<ApiResponse> {
+        return this._request("GET", "indices/tickers", params);
+    }
+
+    ticker(ticker: string): Promise<ApiResponse> {
+        return this._request("GET", `indices/${ticker}`);
+    }
+
+    prices(ticker: string, params: { from?: string, to?: string, frame?: string } = {}): Promise<ApiResponse> {
+        return this._request("GET", `indices/${ticker}/prices`, params);
+    }
+}
+
+class EconAPI extends BaseAPI {
+    search(query: string): Promise<ApiResponse> {
+        return this._request("GET", "econ/search", { query });
+    }
+
+    dataset(seriesId: string): Promise<ApiResponse> {
+        return this._request("GET", `econ/dataset/${seriesId}`);
+    }
+
+    calendar(params: { from?: string, to?: string, country?: string, minImportance?: number, currency?: string, category?: string } = {}): Promise<ApiResponse> {
+        return this._request("GET", "econ/calendar", params);
+    }
+}
+
+class NewsAPI extends BaseAPI {
+    general(): Promise<ApiResponse> {
+        return this._request("GET", "news");
+    }
+
+    company(ticker: string): Promise<ApiResponse> {
+        return this._request("GET", `news/${ticker}`);
+    }
+
+    country(country: string): Promise<ApiResponse> {
+        return this._request("GET", `news/country/${country}`);
+    }
+
+    category(category: string): Promise<ApiResponse> {
+        return this._request("GET", `news/category/${category}`);
+    }
+}
+
+class SentimentAPI extends BaseAPI {
+    all(ticker: string): Promise<ApiResponse> {
+        return this._request("GET", `sentiment/${ticker}/all`);
+    }
+
+    social(ticker: string): Promise<ApiResponse> {
+        return this._request("GET", `sentiment/${ticker}/social`);
+    }
+
+    news(ticker: string): Promise<ApiResponse> {
+        return this._request("GET", `sentiment/${ticker}/news`);
+    }
+
+    analyst(ticker: string): Promise<ApiResponse> {
+        return this._request("GET", `sentiment/${ticker}/analyst`);
+    }
+}
+
+class ProfilesAPI extends BaseAPI {
+    asset(ticker: string): Promise<ApiResponse> {
+        return this._request("GET", `profiles/${ticker}/asset`);
+    }
+
+    recommendation(ticker: string): Promise<ApiResponse> {
+        return this._request("GET", `profiles/${ticker}/recommendation`);
+    }
+
+    cashflow(ticker: string): Promise<ApiResponse> {
+        return this._request("GET", `profiles/${ticker}/cashflow`);
+    }
+
+    indexTrend(ticker: string): Promise<ApiResponse> {
+        return this._request("GET", `profiles/${ticker}/trend/index`);
+    }
+
+    statistics(ticker: string): Promise<ApiResponse> {
+        return this._request("GET", `profiles/${ticker}/statistics`);
+    }
+
+    income(ticker: string): Promise<ApiResponse> {
+        return this._request("GET", `profiles/${ticker}/income`);
+    }
+
+    fund(ticker: string): Promise<ApiResponse> {
+        return this._request("GET", `profiles/${ticker}/fund`);
+    }
+
+    summary(ticker: string): Promise<ApiResponse> {
+        return this._request("GET", `profiles/${ticker}/summary`);
+    }
+
+    insiders(ticker: string): Promise<ApiResponse> {
+        return this._request("GET", `profiles/${ticker}/insiders`);
+    }
+
+    calendar(ticker: string): Promise<ApiResponse> {
+        return this._request("GET", `profiles/${ticker}/calendar`);
+    }
+
+    balancesheet(ticker: string): Promise<ApiResponse> {
+        return this._request("GET", `profiles/${ticker}/balancesheet`);
+    }
+
+    earningsTrend(ticker: string): Promise<ApiResponse> {
+        return this._request("GET", `profiles/${ticker}/trend/earnings`);
+    }
+
+    institutionOwnership(ticker: string): Promise<ApiResponse> {
+        return this._request("GET", `profiles/${ticker}/institution`);
+    }
+
+    ownership(ticker: string): Promise<ApiResponse> {
+        return this._request("GET", `profiles/${ticker}/ownership`);
+    }
+
+    earnings(ticker: string): Promise<ApiResponse> {
+        return this._request("GET", `profiles/${ticker}/earnings`);
+    }
+
+    info(ticker: string): Promise<ApiResponse> {
+        return this._request("GET", `profiles/${ticker}/info`);
+    }
+
+    activity(ticker: string): Promise<ApiResponse> {
+        return this._request("GET", `profiles/${ticker}/activity`);
+    }
+
+    transactions(ticker: string): Promise<ApiResponse> {
+        return this._request("GET", `profiles/${ticker}/transactions`);
+    }
+
+    financials(ticker: string): Promise<ApiResponse> {
+        return this._request("GET", `profiles/${ticker}/financials`);
+    }
+
+    traffic(ticker: string): Promise<ApiResponse> {
+        return this._request("GET", `profiles/${ticker}/traffic`);
+    }
+}
+
 export class Axion {
     private client: AxiosInstance;
     private apiKey?: string;
+
+    public credit: CreditAPI;
+    public esg: ESGAPI;
+    public etfs: ETFAPI;
+    public supplyChain: SupplyChainAPI;
+    public stocks: StocksAPI;
+    public crypto: CryptoAPI;
+    public forex: ForexAPI;
+    public futures: FuturesAPI;
+    public indices: IndicesAPI;
+    public econ: EconAPI;
+    public news: NewsAPI;
+    public sentiment: SentimentAPI;
+    public profiles: ProfilesAPI;
 
     constructor(apiKey?: string) {
         this.apiKey = apiKey;
@@ -19,9 +287,24 @@ export class Axion {
         if (apiKey) {
             this.client.defaults.headers.common["Authorization"] = `Bearer ${this.apiKey}`;
         }
+
+        // Initialize nested API classes
+        this.credit = new CreditAPI(this);
+        this.esg = new ESGAPI(this);
+        this.etfs = new ETFAPI(this);
+        this.supplyChain = new SupplyChainAPI(this);
+        this.stocks = new StocksAPI(this);
+        this.crypto = new CryptoAPI(this);
+        this.forex = new ForexAPI(this);
+        this.futures = new FuturesAPI(this);
+        this.indices = new IndicesAPI(this);
+        this.econ = new EconAPI(this);
+        this.news = new NewsAPI(this);
+        this.sentiment = new SentimentAPI(this);
+        this.profiles = new ProfilesAPI(this);
     }
 
-    private async _request(method: string, path: string, params: Record<string, any> = {}, data: Record<string, any> = {}, authRequired: boolean = true): Promise<ApiResponse> {
+    async _request(method: string, path: string, params: Record<string, any> = {}, data: Record<string, any> = {}, authRequired: boolean = true): Promise<ApiResponse> {
         const config = {
             method,
             url: path,
@@ -53,298 +336,5 @@ export class Axion {
                 throw new Error(`Request Error: ${axiosError.message}`);
             }
         }
-    }
-
-    // --- Credit API ---
-    public searchCredit(query: string): Promise<ApiResponse> {
-        return this._request("GET", "credit/search", { query });
-    }
-
-    public getCreditRatings(entityId: string): Promise<ApiResponse> {
-        return this._request("GET", `credit/ratings/${entityId}`);
-    }
-
-    // --- ESG API ---
-    public getEsgData(ticker: string): Promise<ApiResponse> {
-        return this._request("GET", `esg/${ticker}`);
-    }
-
-    // --- ETF API ---
-    public getEtfFundData(ticker: string): Promise<ApiResponse> {
-        return this._request("GET", `etfs/${ticker}/fund`);
-    }
-
-    public getEtfHoldings(ticker: string): Promise<ApiResponse> {
-        return this._request("GET", `etfs/${ticker}/holdings`);
-    }
-
-    public getEtfExposure(ticker: string): Promise<ApiResponse> {
-        return this._request("GET", `etfs/${ticker}/exposure`);
-    }
-
-    // --- Supply Chain API ---
-    public getSupplyChainCustomers(ticker: string): Promise<ApiResponse> {
-        return this._request("GET", `supply-chain/${ticker}/customers`);
-    }
-
-    public getSupplyChainPeers(ticker: string): Promise<ApiResponse> {
-        return this._request("GET", `supply-chain/${ticker}/peers`);
-    }
-
-    public getSupplyChainSuppliers(ticker: string): Promise<ApiResponse> {
-        return this._request("GET", `supply-chain/${ticker}/suppliers`);
-    }
-
-    // --- Stocks API ---
-    public getStockTickers(params: { country?: string, exchange?: string } = {}): Promise<ApiResponse> {
-        return this._request("GET", "stocks/tickers", params);
-    }
-
-    public getStockTickerBySymbol(ticker: string): Promise<ApiResponse> {
-        return this._request("GET", `stocks/${ticker}`);
-    }
-
-    public getStockPrices(ticker: string, params: { from?: string, to?: string, frame?: string } = {}): Promise<ApiResponse> {
-        return this._request("GET", `stocks/${ticker}/prices`, params);
-    }
-
-    // --- Crypto API ---
-    public getCryptoTickers(params: { type?: string } = {}): Promise<ApiResponse> {
-        return this._request("GET", "crypto/tickers", params);
-    }
-
-    public getCryptoTickerBySymbol(ticker: string): Promise<ApiResponse> {
-        return this._request("GET", `crypto/${ticker}`);
-    }
-
-    public getCryptoPrices(ticker: string, params: { from?: string, to?: string, frame?: string } = {}): Promise<ApiResponse> {
-        return this._request("GET", `crypto/${ticker}/prices`, params);
-    }
-
-    // --- Forex API ---
-    public getForexTickers(params: { country?: string, exchange?: string } = {}): Promise<ApiResponse> {
-        return this._request("GET", "forex/tickers", params);
-    }
-
-    public getForexTickerBySymbol(ticker: string): Promise<ApiResponse> {
-        return this._request("GET", `forex/${ticker}`);
-    }
-
-    public getForexPrices(ticker: string, params: { from?: string, to?: string, frame?: string } = {}): Promise<ApiResponse> {
-        return this._request("GET", `forex/${ticker}/prices`, params);
-    }
-
-    // --- Futures API ---
-    public getFuturesTickers(params: { exchange?: string } = {}): Promise<ApiResponse> {
-        return this._request("GET", "futures/tickers", params);
-    }
-
-    public getFuturesTickerBySymbol(ticker: string): Promise<ApiResponse> {
-        return this._request("GET", `futures/${ticker}`);
-    }
-
-    public getFuturesPrices(ticker: string, params: { from?: string, to?: string, frame?: string } = {}): Promise<ApiResponse> {
-        return this._request("GET", `futures/${ticker}/prices`, params);
-    }
-
-    // --- Indices API ---
-    public getIndexTickers(params: { exchange?: string } = {}): Promise<ApiResponse> {
-        return this._request("GET", "indices/tickers", params);
-    }
-
-    public getIndexTickerBySymbol(ticker: string): Promise<ApiResponse> {
-        return this._request("GET", `indices/${ticker}`);
-    }
-
-    public getIndexPrices(ticker: string, params: { from?: string, to?: string, frame?: string } = {}): Promise<ApiResponse> {
-        return this._request("GET", `indices/${ticker}/prices`, params);
-    }
-
-    // --- Economic API ---
-    public searchEcon(query: string): Promise<ApiResponse> {
-        return this._request("GET", "econ/search", { query });
-    }
-
-    public getEconDataset(seriesId: string): Promise<ApiResponse> {
-        return this._request("GET", `econ/dataset/${seriesId}`);
-    }
-
-    public getEconCalendar(params: { from?: string, to?: string, country?: string, minImportance?: number, currency?: string, category?: string } = {}): Promise<ApiResponse> {
-        return this._request("GET", "econ/calendar", params);
-    }
-
-    // --- Profiles API ---
-    /**
-     * Get asset profile information for a stock
-     */
-    public getStockAsset(ticker: string): Promise<ApiResponse> {
-        return this._request("GET", `profiles/${ticker}/asset`);
-    }
-
-    /**
-     * Get recommendation trend for a stock
-     */
-    public getStockRecommendation(ticker: string): Promise<ApiResponse> {
-        return this._request("GET", `profiles/${ticker}/recommendation`);
-    }
-
-    /**
-     * Get cash flow statement history for a stock
-     */
-    public getStockCashflow(ticker: string): Promise<ApiResponse> {
-        return this._request("GET", `profiles/${ticker}/cashflow`);
-    }
-
-    /**
-     * Get index trend estimates for a stock
-     */
-    public getStockTrendIndex(ticker: string): Promise<ApiResponse> {
-        return this._request("GET", `profiles/${ticker}/trend/index`);
-    }
-
-    /**
-     * Get key statistics for a stock
-     */
-    public getStockStatistics(ticker: string): Promise<ApiResponse> {
-        return this._request("GET", `profiles/${ticker}/statistics`);
-    }
-
-    /**
-     * Get income statement history for a stock
-     */
-    public getStockIncome(ticker: string): Promise<ApiResponse> {
-        return this._request("GET", `profiles/${ticker}/income`);
-    }
-
-    /**
-     * Get fund ownership data for a stock
-     */
-    public getStockFund(ticker: string): Promise<ApiResponse> {
-        return this._request("GET", `profiles/${ticker}/fund`);
-    }
-
-    /**
-     * Get summary detail for a stock
-     */
-    public getStockSummary(ticker: string): Promise<ApiResponse> {
-        return this._request("GET", `profiles/${ticker}/summary`);
-    }
-
-    /**
-     * Get insider holders for a stock
-     */
-    public getStockInsiders(ticker: string): Promise<ApiResponse> {
-        return this._request("GET", `profiles/${ticker}/insiders`);
-    }
-
-    /**
-     * Get calendar events for a stock
-     */
-    public getStockCalendar(ticker: string): Promise<ApiResponse> {
-        return this._request("GET", `profiles/${ticker}/calendar`);
-    }
-
-    /**
-     * Get balance sheet history for a stock
-     */
-    public getStockBalancesheet(ticker: string): Promise<ApiResponse> {
-        return this._request("GET", `profiles/${ticker}/balancesheet`);
-    }
-
-    /**
-     * Get earnings trend estimates for a stock
-     */
-    public getStockTrendEarnings(ticker: string): Promise<ApiResponse> {
-        return this._request("GET", `profiles/${ticker}/trend/earnings`);
-    }
-
-    /**
-     * Get institution ownership for a stock
-     */
-    public getStockInstitution(ticker: string): Promise<ApiResponse> {
-        return this._request("GET", `profiles/${ticker}/institution`);
-    }
-
-    /**
-     * Get major holders breakdown for a stock
-     */
-    public getStockOwnership(ticker: string): Promise<ApiResponse> {
-        return this._request("GET", `profiles/${ticker}/ownership`);
-    }
-
-    /**
-     * Get earnings history for a stock
-     */
-    public getStockEarnings(ticker: string): Promise<ApiResponse> {
-        return this._request("GET", `profiles/${ticker}/earnings`);
-    }
-
-    /**
-     * Get summary profile information for a stock
-     */
-    public getStockInfo(ticker: string): Promise<ApiResponse> {
-        return this._request("GET", `profiles/${ticker}/info`);
-    }
-
-    /**
-     * Get net share purchase activity for a stock
-     */
-    public getStockActivity(ticker: string): Promise<ApiResponse> {
-        return this._request("GET", `profiles/${ticker}/activity`);
-    }
-
-    /**
-     * Get insider transactions for a stock
-     */
-    public getStockTransactions(ticker: string): Promise<ApiResponse> {
-        return this._request("GET", `profiles/${ticker}/transactions`);
-    }
-
-    /**
-     * Get financial data for a stock
-     */
-    public getStockFinancials(ticker: string): Promise<ApiResponse> {
-        return this._request("GET", `profiles/${ticker}/financials`);
-    }
-
-    /**
-     * Get web traffic data for a company
-     */
-    public getStockTraffic(ticker: string): Promise<ApiResponse> {
-        return this._request("GET", `profiles/${ticker}/traffic`);
-    }
-
-    // --- News API ---
-    public getNews(): Promise<ApiResponse> {
-        return this._request("GET", "news");
-    }
-
-    public getCompanyNews(ticker: string): Promise<ApiResponse> {
-        return this._request("GET", `news/${ticker}`);
-    }
-
-    public getCountryNews(country: string): Promise<ApiResponse> {
-        return this._request("GET", `news/country/${country}`);
-    }
-
-    public getCategoryNews(category: string): Promise<ApiResponse> {
-        return this._request("GET", `news/category/${category}`);
-    }
-
-    // --- Sentiment API ---
-    public getSentimentAll(ticker: string): Promise<ApiResponse> {
-        return this._request("GET", `sentiment/${ticker}/all`);
-    }
-
-    public getSentimentSocial(ticker: string): Promise<ApiResponse> {
-        return this._request("GET", `sentiment/${ticker}/social`);
-    }
-
-    public getSentimentNews(ticker: string): Promise<ApiResponse> {
-        return this._request("GET", `sentiment/${ticker}/news`);
-    }
-
-    public getSentimentAnalyst(ticker: string): Promise<ApiResponse> {
-        return this._request("GET", `sentiment/${ticker}/analyst`);
     }
 }
