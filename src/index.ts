@@ -1,7 +1,7 @@
 import axios, { AxiosInstance, AxiosError } from 'axios';
 import { ApiResponse } from './models';
 
-const BASE_URL = "http://localhost:3001";
+const BASE_URL = "https://api.axionquant.com";
 
 class BaseAPI {
     constructor(protected client: Axion) {}
