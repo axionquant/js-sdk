@@ -176,84 +176,190 @@ class SentimentAPI extends BaseAPI {
 }
 
 class ProfilesAPI extends BaseAPI {
-    asset(ticker: string): Promise<ApiResponse> {
-        return this._request("GET", `profiles/${ticker}/asset`);
+    // GET /:ticker - Returns asset profile
+    profile(ticker: string): Promise<ApiResponse> {
+        return this._request("GET", `profiles/${ticker}`);
     }
 
+    // GET /:ticker/recommendation - Returns recommendation trend
     recommendation(ticker: string): Promise<ApiResponse> {
         return this._request("GET", `profiles/${ticker}/recommendation`);
     }
 
-    cashflow(ticker: string): Promise<ApiResponse> {
-        return this._request("GET", `profiles/${ticker}/cashflow`);
-    }
-
-    indexTrend(ticker: string): Promise<ApiResponse> {
-        return this._request("GET", `profiles/${ticker}/trend/index`);
-    }
-
+    // GET /:ticker/statistics - Returns key statistics
     statistics(ticker: string): Promise<ApiResponse> {
         return this._request("GET", `profiles/${ticker}/statistics`);
     }
 
-    income(ticker: string): Promise<ApiResponse> {
-        return this._request("GET", `profiles/${ticker}/income`);
-    }
-
-    fund(ticker: string): Promise<ApiResponse> {
-        return this._request("GET", `profiles/${ticker}/fund`);
-    }
-
+    // GET /:ticker/summary - Returns summary detail
     summary(ticker: string): Promise<ApiResponse> {
         return this._request("GET", `profiles/${ticker}/summary`);
     }
 
-    insiders(ticker: string): Promise<ApiResponse> {
-        return this._request("GET", `profiles/${ticker}/insiders`);
-    }
-
+    // GET /:ticker/calendar - Returns calendar events (earnings, dividends)
     calendar(ticker: string): Promise<ApiResponse> {
         return this._request("GET", `profiles/${ticker}/calendar`);
     }
 
-    balancesheet(ticker: string): Promise<ApiResponse> {
-        return this._request("GET", `profiles/${ticker}/balancesheet`);
-    }
-
-    earningsTrend(ticker: string): Promise<ApiResponse> {
-        return this._request("GET", `profiles/${ticker}/trend/earnings`);
-    }
-
-    institutionOwnership(ticker: string): Promise<ApiResponse> {
-        return this._request("GET", `profiles/${ticker}/institution`);
-    }
-
-    ownership(ticker: string): Promise<ApiResponse> {
-        return this._request("GET", `profiles/${ticker}/ownership`);
-    }
-
-    earnings(ticker: string): Promise<ApiResponse> {
-        return this._request("GET", `profiles/${ticker}/earnings`);
-    }
-
+    // GET /:ticker/info - Returns company info (summary profile)
     info(ticker: string): Promise<ApiResponse> {
         return this._request("GET", `profiles/${ticker}/info`);
     }
+}
 
+class EarningsAPI extends BaseAPI {
+    // GET /:ticker/history - Returns earnings history
+    history(ticker: string): Promise<ApiResponse> {
+        return this._request("GET", `earnings/${ticker}/history`);
+    }
+
+    // GET /:ticker/trend - Returns earnings trend
+    trend(ticker: string): Promise<ApiResponse> {
+        return this._request("GET", `earnings/${ticker}/trend`);
+    }
+
+    // GET /:ticker/index - Returns index trend
+    index(ticker: string): Promise<ApiResponse> {
+        return this._request("GET", `earnings/${ticker}/index`);
+    }
+
+    // GET /:ticker/report - Returns earnings report (requires year and quarter query params)
+    report(ticker: string, params: { year: string, quarter: string }): Promise<ApiResponse> {
+        return this._request("GET", `earnings/${ticker}/report`, params);
+    }
+}
+
+
+class FilingsAPI extends BaseAPI {
+    // GET /:ticker - Get recent filings for a company
+    filings(ticker: string, params: { limit?: number, form?: string } = {}): Promise<ApiResponse> {
+        return this._request("GET", `filings/${ticker}`, params);
+    }
+
+    // GET /:ticker/forms/:formType - Get specific form type filings
+    forms(ticker: string, formType: string, params: { year?: string, quarter?: string, limit?: number } = {}): Promise<ApiResponse> {
+        return this._request("GET", `filings/${ticker}/forms/${formType}`, params);
+    }
+
+    // GET /desc/forms - List available form types and their descriptions
+    descForms(): Promise<ApiResponse> {
+        return this._request("GET", "filings/desc/forms");
+    }
+
+    // GET /search - Search filings by year/quarter
+    search(params: { year: string, quarter: string, form?: string, ticker?: string }): Promise<ApiResponse> {
+        return this._request("GET", "filings/search", params);
+    }
+}
+
+class FinancialsAPI extends BaseAPI {
+    // GET /:ticker/revenue - Get revenue data
+    revenue(ticker: string, params: { periods?: number } = {}): Promise<ApiResponse> {
+        return this._request("GET", `financials/${ticker}/revenue`, params);
+    }
+
+    // GET /:ticker/netincome - Get net income data
+    netIncome(ticker: string, params: { periods?: number } = {}): Promise<ApiResponse> {
+        return this._request("GET", `financials/${ticker}/netincome`, params);
+    }
+
+    // GET /:ticker/total/assets - Get total assets data
+    totalAssets(ticker: string, params: { periods?: number } = {}): Promise<ApiResponse> {
+        return this._request("GET", `financials/${ticker}/total/assets`, params);
+    }
+
+    // GET /:ticker/total/liabilities - Get total liabilities data
+    totalLiabilities(ticker: string, params: { periods?: number } = {}): Promise<ApiResponse> {
+        return this._request("GET", `financials/${ticker}/total/liabilities`, params);
+    }
+
+    // GET /:ticker/stockholdersequity - Get stockholders equity data
+    stockholdersEquity(ticker: string, params: { periods?: number } = {}): Promise<ApiResponse> {
+        return this._request("GET", `financials/${ticker}/stockholdersequity`, params);
+    }
+
+    // GET /:ticker/current/assets - Get current assets data
+    currentAssets(ticker: string, params: { periods?: number } = {}): Promise<ApiResponse> {
+        return this._request("GET", `financials/${ticker}/current/assets`, params);
+    }
+
+    // GET /:ticker/current/liabilities - Get current liabilities data
+    currentLiabilities(ticker: string, params: { periods?: number } = {}): Promise<ApiResponse> {
+        return this._request("GET", `financials/${ticker}/current/liabilities`, params);
+    }
+
+    // GET /:ticker/cashflow/operating - Get operating cash flow data
+    operatingCashFlow(ticker: string, params: { periods?: number } = {}): Promise<ApiResponse> {
+        return this._request("GET", `financials/${ticker}/cashflow/operating`, params);
+    }
+
+    // GET /:ticker/capitalexpenditures - Get capital expenditures data
+    capitalExpenditures(ticker: string, params: { periods?: number } = {}): Promise<ApiResponse> {
+        return this._request("GET", `financials/${ticker}/capitalexpenditures`, params);
+    }
+
+    // GET /:ticker/cashflow/free - Get free cash flow data
+    freeCashFlow(ticker: string, params: { periods?: number } = {}): Promise<ApiResponse> {
+        return this._request("GET", `financials/${ticker}/cashflow/free`, params);
+    }
+
+    // GET /:ticker/sharesoutstanding/basic - Get basic shares outstanding data
+    sharesOutstandingBasic(ticker: string, params: { periods?: number } = {}): Promise<ApiResponse> {
+        return this._request("GET", `financials/${ticker}/sharesoutstanding/basic`, params);
+    }
+
+    // GET /:ticker/sharesoutstanding/diluted - Get diluted shares outstanding data
+    sharesOutstandingDiluted(ticker: string, params: { periods?: number } = {}): Promise<ApiResponse> {
+        return this._request("GET", `financials/${ticker}/sharesoutstanding/diluted`, params);
+    }
+
+    // GET /:ticker/metrics - Get calculated financial metrics
+    metrics(ticker: string): Promise<ApiResponse> {
+        return this._request("GET", `financials/${ticker}/metrics`);
+    }
+
+    // GET /:ticker/snapshot - Get financial data snapshot
+    snapshot(ticker: string): Promise<ApiResponse> {
+        return this._request("GET", `financials/${ticker}/snapshot`);
+    }
+}
+
+class InsidersAPI extends BaseAPI {
+    // GET /:ticker/funds - Get fund ownership data
+    funds(ticker: string): Promise<ApiResponse> {
+        return this._request("GET", `insiders/${ticker}/funds`);
+    }
+
+    // GET /:ticker/individuals - Get insider holders (individuals)
+    individuals(ticker: string): Promise<ApiResponse> {
+        return this._request("GET", `insiders/${ticker}/individuals`);
+    }
+
+    // GET /:ticker/institutions - Get institutional ownership data
+    institutions(ticker: string): Promise<ApiResponse> {
+        return this._request("GET", `insiders/${ticker}/institutions`);
+    }
+
+    // GET /:ticker/ownership - Get major holders breakdown
+    ownership(ticker: string): Promise<ApiResponse> {
+        return this._request("GET", `insiders/${ticker}/ownership`);
+    }
+
+    // GET /:ticker/activity - Get net share purchase activity
     activity(ticker: string): Promise<ApiResponse> {
-        return this._request("GET", `profiles/${ticker}/activity`);
+        return this._request("GET", `insiders/${ticker}/activity`);
     }
 
+    // GET /:ticker/transactions - Get insider transactions
     transactions(ticker: string): Promise<ApiResponse> {
-        return this._request("GET", `profiles/${ticker}/transactions`);
+        return this._request("GET", `insiders/${ticker}/transactions`);
     }
+}
 
-    financials(ticker: string): Promise<ApiResponse> {
-        return this._request("GET", `profiles/${ticker}/financials`);
-    }
-
+class WebTrafficAPI extends BaseAPI {
+    // GET /:ticker/traffic - Get web traffic data for a company's website
     traffic(ticker: string): Promise<ApiResponse> {
-        return this._request("GET", `profiles/${ticker}/traffic`);
+        return this._request("GET", `webtraffic/${ticker}/traffic`);
     }
 }
 
@@ -274,6 +380,11 @@ export class Axion {
     public news: NewsAPI;
     public sentiment: SentimentAPI;
     public profiles: ProfilesAPI;
+    public earnings: EarningsAPI;
+    public filings: FilingsAPI;
+    public financials: FinancialsAPI;
+    public insiders: InsidersAPI;
+    public webTraffic: WebTrafficAPI;
 
     constructor(apiKey?: string) {
         this.apiKey = apiKey;
@@ -288,7 +399,6 @@ export class Axion {
             this.client.defaults.headers.common["Authorization"] = `Bearer ${this.apiKey}`;
         }
 
-        // Initialize nested API classes
         this.credit = new CreditAPI(this);
         this.esg = new ESGAPI(this);
         this.etfs = new ETFAPI(this);
@@ -302,6 +412,11 @@ export class Axion {
         this.news = new NewsAPI(this);
         this.sentiment = new SentimentAPI(this);
         this.profiles = new ProfilesAPI(this);
+        this.earnings = new EarningsAPI(this);
+        this.filings = new FilingsAPI(this);
+        this.financials = new FinancialsAPI(this);
+        this.insiders = new InsidersAPI(this);
+        this.webTraffic = new WebTrafficAPI(this);
     }
 
     async _request(method: string, path: string, params: Record<string, any> = {}, data: Record<string, any> = {}, authRequired: boolean = true): Promise<ApiResponse> {
@@ -321,9 +436,6 @@ export class Axion {
 
         try {
             const response = await this.client.request(config);
-            // The python version has a normalize function, which seems to coerce strings to numbers/booleans.
-            // This is generally not needed in JS/TS as JSON parsing handles types correctly.
-            // If the API returns numbers as strings, a normalization step would be needed here.
             return response.data;
         } catch (error) {
             const axiosError = error as AxiosError;

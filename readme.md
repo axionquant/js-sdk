@@ -1,6 +1,6 @@
 # Axion SDK
 
-A TypeScript/JavaScript SDK for the Axion financial data API.
+A TypeScript/JavaScript SDK for the [Axion](https://axionquant.com) financial data API.
 
 ## Installation
 
@@ -10,167 +10,170 @@ npm install @axionquant/sdk
 
 ## Quick Start
 
-```typescript
-import { Axion } from '@axionquant/sdk';
+[Get your free API key](https://axionquant.com/dashboard/api-keys)
 
-// Initialize with API key
+```js
+const { Axion } = require('@axionquant/sdk');
+
 const client = new Axion('your-api-key');
 
-// Get stock price data
+// Get stock tickers
+const tickers = await client.stocks.tickers({ country: 'US', exchange: 'NASDAQ' });
+
+// Get historical prices
 const prices = await client.stocks.prices('AAPL', {
   from: '2024-01-01',
-  to: '2024-12-31'
+  to: '2024-12-31',
+  frame: '1d'
 });
 ```
 
 ## Authentication
 
-Some endpoints require authentication. Provide your API key when initializing the client:
+Most endpoints require an API key. Pass it when initializing the client:
 
-```typescript
+```js
 const client = new Axion('your-api-key');
-```
-
-For endpoints that don't require authentication, you can initialize without an API key:
-
-```typescript
-const client = new Axion();
 ```
 
 ## API Reference
 
-### Credit
-
-```typescript
-// Search for credit entities
-await client.credit.search('Apple Inc');
-
-// Get credit ratings for an entity
-await client.credit.ratings('entity-id');
-```
-
-### ESG
-
-```typescript
-// Get ESG data for a stock
-await client.esg.data('AAPL');
-```
-
-### ETFs
-
-```typescript
-// Get ETF fund data
-await client.etfs.fund('SPY');
-
-// Get ETF holdings
-await client.etfs.holdings('SPY');
-
-// Get ETF exposure data
-await client.etfs.exposure('SPY');
-```
-
-### Supply Chain
-
-```typescript
-// Get company customers
-await client.supplyChain.customers('AAPL');
-
-// Get company peers
-await client.supplyChain.peers('AAPL');
-
-// Get company suppliers
-await client.supplyChain.suppliers('AAPL');
-```
-
 ### Stocks
 
-```typescript
+```js
 // Get all stock tickers
 await client.stocks.tickers({ country: 'US', exchange: 'NASDAQ' });
 
-// Get ticker information
+// Get ticker info
 await client.stocks.ticker('AAPL');
 
 // Get historical prices
-await client.stocks.prices('AAPL', {
-  from: '2024-01-01',
-  to: '2024-12-31',
-  frame: '1d' // daily
-});
+await client.stocks.prices('AAPL', { from: '2024-01-01', to: '2024-12-31', frame: '1d' });
 ```
 
 ### Crypto
 
-```typescript
-// Get all crypto tickers
+```js
 await client.crypto.tickers({ type: 'coin' });
-
-// Get crypto ticker information
 await client.crypto.ticker('BTC');
-
-// Get crypto prices
-await client.crypto.prices('BTC', {
-  from: '2024-01-01',
-  to: '2024-12-31',
-  frame: '1h'
-});
+await client.crypto.prices('BTC', { from: '2024-01-01', to: '2024-12-31', frame: '1h' });
 ```
 
 ### Forex
 
-```typescript
-// Get forex tickers
+```js
 await client.forex.tickers({ country: 'US' });
-
-// Get forex ticker information
 await client.forex.ticker('EURUSD');
-
-// Get forex prices
-await client.forex.prices('EURUSD', {
-  from: '2024-01-01',
-  to: '2024-12-31'
-});
+await client.forex.prices('EURUSD', { from: '2024-01-01', to: '2024-12-31' });
 ```
 
 ### Futures
 
-```typescript
-// Get futures tickers
+```js
 await client.futures.tickers({ exchange: 'CME' });
-
-// Get futures ticker information
 await client.futures.ticker('ES');
-
-// Get futures prices
-await client.futures.prices('ES', {
-  from: '2024-01-01',
-  to: '2024-12-31'
-});
+await client.futures.prices('ES', { from: '2024-01-01', to: '2024-12-31' });
 ```
 
 ### Indices
 
-```typescript
-// Get index tickers
+```js
 await client.indices.tickers({ exchange: 'NYSE' });
-
-// Get index ticker information
 await client.indices.ticker('SPX');
+await client.indices.prices('SPX', { from: '2024-01-01', to: '2024-12-31' });
+```
 
-// Get index prices
-await client.indices.prices('SPX', {
-  from: '2024-01-01',
-  to: '2024-12-31'
-});
+### Financials
+
+```js
+await client.financials.revenue('AAPL', { periods: 8 });
+await client.financials.netIncome('AAPL');
+await client.financials.totalAssets('AAPL');
+await client.financials.totalLiabilities('AAPL');
+await client.financials.stockholdersEquity('AAPL');
+await client.financials.currentAssets('AAPL');
+await client.financials.currentLiabilities('AAPL');
+await client.financials.operatingCashFlow('AAPL');
+await client.financials.capitalExpenditures('AAPL');
+await client.financials.freeCashFlow('AAPL');
+await client.financials.sharesOutstandingBasic('AAPL');
+await client.financials.sharesOutstandingDiluted('AAPL');
+await client.financials.metrics('AAPL');
+await client.financials.snapshot('AAPL');
+```
+
+### Earnings
+
+```js
+await client.earnings.history('AAPL');
+await client.earnings.trend('AAPL');
+await client.earnings.index('AAPL');
+await client.earnings.report('AAPL', { year: '2024', quarter: 'Q1' });
+```
+
+### Filings
+
+```js
+// Get recent filings
+await client.filings.filings('AAPL', { limit: 10, form: '10-K' });
+
+// Get specific form type
+await client.filings.forms('AAPL', '10-K', { year: '2024', quarter: 'Q1' });
+
+// List available form types
+await client.filings.descForms();
+
+// Search filings by year/quarter
+await client.filings.search({ year: '2024', quarter: 'Q1', form: '10-Q', ticker: 'AAPL' });
+```
+
+### Insiders
+
+```js
+await client.insiders.funds('AAPL');
+await client.insiders.individuals('AAPL');
+await client.insiders.institutions('AAPL');
+await client.insiders.ownership('AAPL');
+await client.insiders.activity('AAPL');
+await client.insiders.transactions('AAPL');
+```
+
+### Company Profiles
+
+```js
+await client.profiles.profile('AAPL');
+await client.profiles.recommendation('AAPL');
+await client.profiles.statistics('AAPL');
+await client.profiles.summary('AAPL');
+await client.profiles.info('AAPL');
+await client.profiles.calendar('AAPL');
+```
+
+### Sentiment
+
+```js
+await client.sentiment.all('AAPL');
+await client.sentiment.social('AAPL');
+await client.sentiment.news('AAPL');
+await client.sentiment.analyst('AAPL');
+```
+
+### News
+
+```js
+await client.news.general();
+await client.news.company('AAPL');
+await client.news.country('US');
+await client.news.category('technology');
 ```
 
 ### Economic Data
 
-```typescript
-// Search for economic datasets
+```js
+// Search datasets
 await client.econ.search('unemployment rate');
 
-// Get economic dataset
+// Get a dataset
 await client.econ.dataset('UNRATE');
 
 // Get economic calendar
@@ -184,101 +187,56 @@ await client.econ.calendar({
 });
 ```
 
-### News
+### Credit
 
-```typescript
-// Get latest general news
-await client.news.general();
-
-// Get company-specific news
-await client.news.company('AAPL');
-
-// Get country news
-await client.news.country('US');
-
-// Get category news
-await client.news.category('technology');
+```js
+await client.credit.search('Apple Inc');
+await client.credit.ratings('entity-id');
 ```
 
-### Sentiment
+### ESG
 
-```typescript
-// Get all sentiment data
-await client.sentiment.all('AAPL');
-
-// Get social media sentiment
-await client.sentiment.social('AAPL');
-
-// Get news sentiment
-await client.sentiment.news('AAPL');
-
-// Get analyst sentiment
-await client.sentiment.analyst('AAPL');
+```js
+await client.esg.data('AAPL');
 ```
 
-### Company Profiles
+### ETFs
 
-```typescript
-// Asset profile
-await client.profiles.asset('AAPL');
+```js
+await client.etfs.fund('SPY');
+await client.etfs.holdings('SPY');
+await client.etfs.exposure('SPY');
+```
 
-// Recommendations
-await client.profiles.recommendation('AAPL');
+### Supply Chain
 
-// Financial statements
-await client.profiles.cashflow('AAPL');
-await client.profiles.income('AAPL');
-await client.profiles.balancesheet('AAPL');
-await client.profiles.financials('AAPL');
+```js
+await client.supplyChain.customers('AAPL');
+await client.supplyChain.peers('AAPL');
+await client.supplyChain.suppliers('AAPL');
+```
 
-// Company statistics
-await client.profiles.statistics('AAPL');
-await client.profiles.summary('AAPL');
-await client.profiles.info('AAPL');
+### Web Traffic
 
-// Ownership and holders
-await client.profiles.fund('AAPL');
-await client.profiles.insiders('AAPL');
-await client.profiles.institutionOwnership('AAPL');
-await client.profiles.ownership('AAPL');
-
-// Earnings and trends
-await client.profiles.earnings('AAPL');
-await client.profiles.earningsTrend('AAPL');
-await client.profiles.indexTrend('AAPL');
-
-// Insider activity
-await client.profiles.activity('AAPL');
-await client.profiles.transactions('AAPL');
-
-// Calendar events
-await client.profiles.calendar('AAPL');
-
-// Web traffic
-await client.profiles.traffic('AAPL');
+```js
+await client.webTraffic.traffic('AAPL');
 ```
 
 ## Error Handling
 
-The SDK throws errors for failed requests. Use try-catch blocks to handle them:
-
-```typescript
+```js
 try {
   const data = await client.stocks.prices('AAPL');
   console.log(data);
 } catch (error) {
-  console.error('Error fetching data:', error.message);
+  console.error('Error:', error.message);
 }
 ```
 
-## TypeScript Support
+## Get Started
 
-This SDK is written in TypeScript and includes type definitions. Import types as needed:
+For detailed API documentation, support, or to obtain an API key, visit the [Axion](https://axionquant.com) website.
 
-```typescript
-import { Axion, ApiResponse } from '@axionquant/sdk';
-```
+## License
 
-## Base URL
-
-By default, the SDK connects to `https://api.axionquant.com`. To use a different base URL, modify the `BASE_URL` constant in the source code.
+MIT
