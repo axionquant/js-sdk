@@ -28,6 +28,17 @@ class ESGAPI extends BaseAPI {
 }
 
 class ETFAPI extends BaseAPI {
+   tickers(params: { country?: string, exchange?: string } = {}): Promise<ApiResponse> {
+        return this._request("GET", "etfs/tickers", params);
+    }
+
+    ticker(ticker: string): Promise<ApiResponse> {
+        return this._request("GET", `etfs/${ticker}`);
+    }
+    prices(ticker: string, params: { from?: string, to?: string, frame?: string } = {}): Promise<ApiResponse> {
+        return this._request("GET", `etfs/${ticker}/prices`, params);
+    }
+
     fund(ticker: string): Promise<ApiResponse> {
         return this._request("GET", `etfs/${ticker}/fund`);
     }
@@ -38,6 +49,45 @@ class ETFAPI extends BaseAPI {
 
     exposure(ticker: string): Promise<ApiResponse> {
         return this._request("GET", `etfs/${ticker}/exposure`);
+    }
+    weights(ticker: string): Promise<ApiResponse> {
+        return this._request("GET", `etfs/${ticker}/weights`);
+    }
+
+    gainers(): Promise<ApiResponse> {
+        return this._request("GET", "etfs/gainers");
+    }
+
+    losers(): Promise<ApiResponse> {
+        return this._request("GET", "etfs/losers");
+    }
+
+    listMarket(): Promise<ApiResponse> {
+        return this._request("GET", "etfs/list/market");
+    }
+
+    listCountry(): Promise<ApiResponse> {
+        return this._request("GET", "etfs/list/country");
+    }
+
+    listCurrency(): Promise<ApiResponse> {
+        return this._request("GET", "etfs/list/currency");
+    }
+
+    listSector(): Promise<ApiResponse> {
+        return this._request("GET", "etfs/list/sector");
+    }
+
+    listIndustry(): Promise<ApiResponse> {
+        return this._request("GET", "etfs/list/industry");
+    }
+
+    listType(): Promise<ApiResponse> {
+        return this._request("GET", "etfs/list/type");
+    }
+
+    quote(ticker: string): Promise<ApiResponse> {
+        return this._request("GET", `etfs/${ticker}/quote`);
     }
 }
 
@@ -67,6 +117,42 @@ class StocksAPI extends BaseAPI {
     prices(ticker: string, params: { from?: string, to?: string, frame?: string } = {}): Promise<ApiResponse> {
         return this._request("GET", `stocks/${ticker}/prices`, params);
     }
+
+    gainers(): Promise<ApiResponse> {
+        return this._request("GET", "stocks/gainers");
+    }
+
+    losers(): Promise<ApiResponse> {
+        return this._request("GET", "stocks/losers");
+    }
+
+    listMarket(): Promise<ApiResponse> {
+        return this._request("GET", "stocks/list/market");
+    }
+
+    listCountry(): Promise<ApiResponse> {
+        return this._request("GET", "stocks/list/country");
+    }
+
+    listCurrency(): Promise<ApiResponse> {
+        return this._request("GET", "stocks/list/currency");
+    }
+
+    listSector(): Promise<ApiResponse> {
+        return this._request("GET", "stocks/list/sector");
+    }
+
+    listIndustry(): Promise<ApiResponse> {
+        return this._request("GET", "stocks/list/industry");
+    }
+
+    listType(): Promise<ApiResponse> {
+        return this._request("GET", "stocks/list/type");
+    }
+
+    quote(ticker: string): Promise<ApiResponse> {
+        return this._request("GET", `stocks/${ticker}/quote`);
+    }
 }
 
 class CryptoAPI extends BaseAPI {
@@ -80,6 +166,30 @@ class CryptoAPI extends BaseAPI {
 
     prices(ticker: string, params: { from?: string, to?: string, frame?: string } = {}): Promise<ApiResponse> {
         return this._request("GET", `crypto/${ticker}/prices`, params);
+    }
+
+    gainers(): Promise<ApiResponse> {
+        return this._request("GET", "crypto/gainers");
+    }
+
+    losers(): Promise<ApiResponse> {
+        return this._request("GET", "crypto/losers");
+    }
+
+    listCategory(): Promise<ApiResponse> {
+        return this._request("GET", "crypto/list/category");
+    }
+
+    listRating(): Promise<ApiResponse> {
+        return this._request("GET", "crypto/list/rating");
+    }
+
+    listType(): Promise<ApiResponse> {
+        return this._request("GET", "crypto/list/type");
+    }
+
+    quote(ticker: string): Promise<ApiResponse> {
+        return this._request("GET", `crypto/${ticker}/quote`);
     }
 }
 
@@ -95,6 +205,30 @@ class ForexAPI extends BaseAPI {
     prices(ticker: string, params: { from?: string, to?: string, frame?: string } = {}): Promise<ApiResponse> {
         return this._request("GET", `forex/${ticker}/prices`, params);
     }
+
+    gainers(): Promise<ApiResponse> {
+        return this._request("GET", "forex/gainers");
+    }
+
+    losers(): Promise<ApiResponse> {
+        return this._request("GET", "forex/losers");
+    }
+
+    listExchange(): Promise<ApiResponse> {
+        return this._request("GET", "forex/list/exchange");
+    }
+
+    listRating(): Promise<ApiResponse> {
+        return this._request("GET", "forex/list/rating");
+    }
+
+    listCountry(): Promise<ApiResponse> {
+        return this._request("GET", "forex/list/country");
+    }
+
+    quote(ticker: string): Promise<ApiResponse> {
+        return this._request("GET", `forex/${ticker}/quote`);
+    }
 }
 
 class FuturesAPI extends BaseAPI {
@@ -109,6 +243,34 @@ class FuturesAPI extends BaseAPI {
     prices(ticker: string, params: { from?: string, to?: string, frame?: string } = {}): Promise<ApiResponse> {
         return this._request("GET", `futures/${ticker}/prices`, params);
     }
+
+    gainers(): Promise<ApiResponse> {
+        return this._request("GET", "futures/gainers");
+    }
+
+    losers(): Promise<ApiResponse> {
+        return this._request("GET", "futures/losers");
+    }
+
+    listExchange(): Promise<ApiResponse> {
+        return this._request("GET", "futures/list/exchange");
+    }
+
+    listCurrency(): Promise<ApiResponse> {
+        return this._request("GET", "futures/list/currency");
+    }
+
+    listTimezone(): Promise<ApiResponse> {
+        return this._request("GET", "futures/list/timezone");
+    }
+
+    listCountry(): Promise<ApiResponse> {
+        return this._request("GET", "futures/list/country");
+    }
+
+    quote(ticker: string): Promise<ApiResponse> {
+        return this._request("GET", `futures/${ticker}/quote`);
+    }
 }
 
 class IndicesAPI extends BaseAPI {
@@ -122,6 +284,30 @@ class IndicesAPI extends BaseAPI {
 
     prices(ticker: string, params: { from?: string, to?: string, frame?: string } = {}): Promise<ApiResponse> {
         return this._request("GET", `indices/${ticker}/prices`, params);
+    }
+
+    gainers(): Promise<ApiResponse> {
+        return this._request("GET", "indices/gainers");
+    }
+
+    losers(): Promise<ApiResponse> {
+        return this._request("GET", "indices/losers");
+    }
+
+    listExchange(): Promise<ApiResponse> {
+        return this._request("GET", "indices/list/exchange");
+    }
+
+    listTimezone(): Promise<ApiResponse> {
+        return this._request("GET", "indices/list/timezone");
+    }
+
+    listCountry(): Promise<ApiResponse> {
+        return this._request("GET", "indices/list/country");
+    }
+
+    quote(ticker: string): Promise<ApiResponse> {
+        return this._request("GET", `indices/${ticker}/quote`);
     }
 }
 
