@@ -122,6 +122,51 @@ async function runExamples() {
         console.log('10. Sentiment Analysis Examples:');
         const sentiment = await client.getSentimentAll('AAPL');
         console.log('AAPL Sentiment Data:', Object.keys(sentiment.data));
+        console.log();
+
+        // --- 11. Indices Components & Exposure ---
+        console.log('11. Indices API Examples:');
+        const components = await client.indices.components('SPX');
+        console.log('SPX Components:', components.data?.components?.length || 0, 'holdings');
+
+        const exposure = await client.indices.exposure('AAPL');
+        console.log('AAPL Index Exposure:', exposure.data?.length || 0, 'indices');
+        console.log();
+
+        // --- 12. Econ Find Example ---
+        console.log('12. Econ Find (AI search) Example:');
+        const econFind = await client.econ.find('semiconductor spending');
+        console.log('AI Econ Search results:', econFind.data?.length || 0);
+        console.log();
+
+        // --- 13. Earnings Transcript Examples ---
+        console.log('13. Earnings Transcript Examples:');
+        const transcript = await client.earnings.transcript('AAPL', { year: '2024', quarter: '2' });
+        console.log('AAPL Q2 2024 Transcript id:', transcript.data?.id);
+
+        const transcriptSentiment = await client.earnings.transcriptSentiment(transcript.data?.id);
+        console.log('Transcript Sentiment:', transcriptSentiment.data?.label);
+        console.log();
+
+        // --- 14. Filings Document Examples ---
+        console.log('14. Filings Document Examples:');
+        const docText = await client.filings.documentText('some-document-id');
+        console.log('Document text retrieved:', docText.data ? 'yes' : 'no');
+
+        const docSentiment = await client.filings.documentSentiment('some-document-id');
+        console.log('Document sentiment:', docSentiment.data?.label);
+        console.log();
+
+        // --- 15. Financial Statements Examples ---
+        console.log('15. Financial Statements Examples:');
+        const balance = await client.financials.balanceSheet('AAPL', { year: '2024', quarter: '1' });
+        console.log('AAPL Balance Sheet items:', balance.data?.length || 0);
+
+        const income = await client.financials.incomeStatement('AAPL', { year: '2024', quarter: '1' });
+        console.log('AAPL Income Statement items:', income.data?.length || 0);
+
+        const cashflow = await client.financials.cashFlowStatement('AAPL', { year: '2024', quarter: '1' });
+        console.log('AAPL Cash Flow items:', cashflow.data?.length || 0);
 
     } catch (error) {
         console.error('Error in example:', error.message);

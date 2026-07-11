@@ -49,6 +49,13 @@ await client.stocks.ticker('AAPL');
 
 // Get historical prices
 await client.stocks.prices('AAPL', { from: '2024-01-01', to: '2024-12-31', frame: '1d' });
+
+// Get gainers and losers
+await client.stocks.gainers({ days: 5, limit: 10, market: 'america' });
+await client.stocks.losers({ days: 5, limit: 10 });
+
+// Get stock quote
+await client.stocks.quote('AAPL');
 ```
 
 ### Crypto
@@ -57,6 +64,9 @@ await client.stocks.prices('AAPL', { from: '2024-01-01', to: '2024-12-31', frame
 await client.crypto.tickers({ type: 'coin' });
 await client.crypto.ticker('BTC');
 await client.crypto.prices('BTC', { from: '2024-01-01', to: '2024-12-31', frame: '1h' });
+await client.crypto.gainers({ days: 5, limit: 10 });
+await client.crypto.losers({ limit: 5 });
+await client.crypto.quote('BTC');
 ```
 
 ### Forex
@@ -65,6 +75,9 @@ await client.crypto.prices('BTC', { from: '2024-01-01', to: '2024-12-31', frame:
 await client.forex.tickers({ country: 'US' });
 await client.forex.ticker('EURUSD');
 await client.forex.prices('EURUSD', { from: '2024-01-01', to: '2024-12-31' });
+await client.forex.gainers({ limit: 5 });
+await client.forex.losers();
+await client.forex.quote('EURUSD');
 ```
 
 ### Futures
@@ -73,6 +86,9 @@ await client.forex.prices('EURUSD', { from: '2024-01-01', to: '2024-12-31' });
 await client.futures.tickers({ exchange: 'CME' });
 await client.futures.ticker('ES');
 await client.futures.prices('ES', { from: '2024-01-01', to: '2024-12-31' });
+await client.futures.gainers({ limit: 5 });
+await client.futures.losers();
+await client.futures.quote('ES');
 ```
 
 ### Indices
@@ -81,11 +97,19 @@ await client.futures.prices('ES', { from: '2024-01-01', to: '2024-12-31' });
 await client.indices.tickers({ exchange: 'NYSE' });
 await client.indices.ticker('SPX');
 await client.indices.prices('SPX', { from: '2024-01-01', to: '2024-12-31' });
+await client.indices.components('SPX');
+await client.indices.exposure('AAPL');
 ```
 
 ### Financials
 
 ```js
+// Financial statements (balance sheet, income, cash flow)
+await client.financials.balanceSheet('AAPL', { year: '2024', quarter: '1' });
+await client.financials.incomeStatement('AAPL', { year: '2024', quarter: '1' });
+await client.financials.cashFlowStatement('AAPL', { year: '2024', quarter: '1' });
+
+// Historical financial metrics
 await client.financials.revenue('AAPL', { periods: 8 });
 await client.financials.netIncome('AAPL');
 await client.financials.totalAssets('AAPL');
@@ -109,6 +133,8 @@ await client.earnings.history('AAPL');
 await client.earnings.trend('AAPL');
 await client.earnings.index('AAPL');
 await client.earnings.report('AAPL', { year: '2024', quarter: 'Q1' });
+await client.earnings.transcript('AAPL', { year: '2024', quarter: '2' });
+await client.earnings.transcriptSentiment('base64-encoded-id');
 ```
 
 ### Filings
@@ -125,6 +151,10 @@ await client.filings.descForms();
 
 // Search filings by year/quarter
 await client.filings.search({ year: '2024', quarter: 'Q1', form: '10-Q', ticker: 'AAPL' });
+
+// Get document text/sentiment
+await client.filings.documentText('document-id');
+await client.filings.documentSentiment('document-id');
 ```
 
 ### Insiders
@@ -170,6 +200,9 @@ await client.news.category('technology');
 ### Economic Data
 
 ```js
+// AI-powered FRED dataset finder (natural language)
+await client.econ.find('semiconductor spending');
+
 // Search datasets
 await client.econ.search('unemployment rate');
 
@@ -183,7 +216,8 @@ await client.econ.calendar({
   country: 'US',
   minImportance: 3,
   currency: 'USD',
-  category: 'employment'
+  category: 'employment',
+  limit: 25
 });
 ```
 
@@ -206,6 +240,10 @@ await client.esg.data('AAPL');
 await client.etfs.fund('SPY');
 await client.etfs.holdings('SPY');
 await client.etfs.exposure('SPY');
+await client.etfs.weights('SPY');
+await client.etfs.gainers({ limit: 5 });
+await client.etfs.losers();
+await client.etfs.quote('SPY');
 ```
 
 ### Supply Chain

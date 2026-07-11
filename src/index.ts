@@ -54,12 +54,12 @@ class ETFAPI extends BaseAPI {
         return this._request("GET", `etfs/${ticker}/weights`);
     }
 
-    gainers(): Promise<ApiResponse> {
-        return this._request("GET", "etfs/gainers");
+    gainers(params: { days?: number, limit?: number } = {}): Promise<ApiResponse> {
+        return this._request("GET", "etfs/gainers", params);
     }
 
-    losers(): Promise<ApiResponse> {
-        return this._request("GET", "etfs/losers");
+    losers(params: { days?: number, limit?: number } = {}): Promise<ApiResponse> {
+        return this._request("GET", "etfs/losers", params);
     }
 
     listMarket(): Promise<ApiResponse> {
@@ -84,6 +84,10 @@ class ETFAPI extends BaseAPI {
 
     listType(): Promise<ApiResponse> {
         return this._request("GET", "etfs/list/type");
+    }
+
+    list(column: string): Promise<ApiResponse> {
+        return this._request("GET", `etfs/list/${column}`);
     }
 
     quote(ticker: string): Promise<ApiResponse> {
@@ -118,12 +122,12 @@ class StocksAPI extends BaseAPI {
         return this._request("GET", `stocks/${ticker}/prices`, params);
     }
 
-    gainers(): Promise<ApiResponse> {
-        return this._request("GET", "stocks/gainers");
+    gainers(params: { days?: number, limit?: number, market?: string } = {}): Promise<ApiResponse> {
+        return this._request("GET", "stocks/gainers", params);
     }
 
-    losers(): Promise<ApiResponse> {
-        return this._request("GET", "stocks/losers");
+    losers(params: { days?: number, limit?: number, market?: string } = {}): Promise<ApiResponse> {
+        return this._request("GET", "stocks/losers", params);
     }
 
     listMarket(): Promise<ApiResponse> {
@@ -150,6 +154,10 @@ class StocksAPI extends BaseAPI {
         return this._request("GET", "stocks/list/type");
     }
 
+    list(column: string): Promise<ApiResponse> {
+        return this._request("GET", `stocks/list/${column}`);
+    }
+
     quote(ticker: string): Promise<ApiResponse> {
         return this._request("GET", `stocks/${ticker}/quote`);
     }
@@ -168,12 +176,12 @@ class CryptoAPI extends BaseAPI {
         return this._request("GET", `crypto/${ticker}/prices`, params);
     }
 
-    gainers(): Promise<ApiResponse> {
-        return this._request("GET", "crypto/gainers");
+    gainers(params: { days?: number, limit?: number } = {}): Promise<ApiResponse> {
+        return this._request("GET", "crypto/gainers", params);
     }
 
-    losers(): Promise<ApiResponse> {
-        return this._request("GET", "crypto/losers");
+    losers(params: { days?: number, limit?: number } = {}): Promise<ApiResponse> {
+        return this._request("GET", "crypto/losers", params);
     }
 
     listCategory(): Promise<ApiResponse> {
@@ -186,6 +194,10 @@ class CryptoAPI extends BaseAPI {
 
     listType(): Promise<ApiResponse> {
         return this._request("GET", "crypto/list/type");
+    }
+
+    list(column: string): Promise<ApiResponse> {
+        return this._request("GET", `crypto/list/${column}`);
     }
 
     quote(ticker: string): Promise<ApiResponse> {
@@ -206,12 +218,12 @@ class ForexAPI extends BaseAPI {
         return this._request("GET", `forex/${ticker}/prices`, params);
     }
 
-    gainers(): Promise<ApiResponse> {
-        return this._request("GET", "forex/gainers");
+    gainers(params: { days?: number, limit?: number } = {}): Promise<ApiResponse> {
+        return this._request("GET", "forex/gainers", params);
     }
 
-    losers(): Promise<ApiResponse> {
-        return this._request("GET", "forex/losers");
+    losers(params: { days?: number, limit?: number } = {}): Promise<ApiResponse> {
+        return this._request("GET", "forex/losers", params);
     }
 
     listExchange(): Promise<ApiResponse> {
@@ -224,6 +236,10 @@ class ForexAPI extends BaseAPI {
 
     listCountry(): Promise<ApiResponse> {
         return this._request("GET", "forex/list/country");
+    }
+
+    list(column: string): Promise<ApiResponse> {
+        return this._request("GET", `forex/list/${column}`);
     }
 
     quote(ticker: string): Promise<ApiResponse> {
@@ -244,12 +260,12 @@ class FuturesAPI extends BaseAPI {
         return this._request("GET", `futures/${ticker}/prices`, params);
     }
 
-    gainers(): Promise<ApiResponse> {
-        return this._request("GET", "futures/gainers");
+    gainers(params: { days?: number, limit?: number } = {}): Promise<ApiResponse> {
+        return this._request("GET", "futures/gainers", params);
     }
 
-    losers(): Promise<ApiResponse> {
-        return this._request("GET", "futures/losers");
+    losers(params: { days?: number, limit?: number } = {}): Promise<ApiResponse> {
+        return this._request("GET", "futures/losers", params);
     }
 
     listExchange(): Promise<ApiResponse> {
@@ -266,6 +282,10 @@ class FuturesAPI extends BaseAPI {
 
     listCountry(): Promise<ApiResponse> {
         return this._request("GET", "futures/list/country");
+    }
+
+    list(column: string): Promise<ApiResponse> {
+        return this._request("GET", `futures/list/${column}`);
     }
 
     quote(ticker: string): Promise<ApiResponse> {
@@ -286,12 +306,12 @@ class IndicesAPI extends BaseAPI {
         return this._request("GET", `indices/${ticker}/prices`, params);
     }
 
-    gainers(): Promise<ApiResponse> {
-        return this._request("GET", "indices/gainers");
+    gainers(params: { days?: number, limit?: number } = {}): Promise<ApiResponse> {
+        return this._request("GET", "indices/gainers", params);
     }
 
-    losers(): Promise<ApiResponse> {
-        return this._request("GET", "indices/losers");
+    losers(params: { days?: number, limit?: number } = {}): Promise<ApiResponse> {
+        return this._request("GET", "indices/losers", params);
     }
 
     listExchange(): Promise<ApiResponse> {
@@ -306,12 +326,31 @@ class IndicesAPI extends BaseAPI {
         return this._request("GET", "indices/list/country");
     }
 
+    list(column: string): Promise<ApiResponse> {
+        return this._request("GET", `indices/list/${column}`);
+    }
+
     quote(ticker: string): Promise<ApiResponse> {
         return this._request("GET", `indices/${ticker}/quote`);
+    }
+
+    // GET /:ticker/components - Get index components
+    components(ticker: string): Promise<ApiResponse> {
+        return this._request("GET", `indices/${ticker}/components`);
+    }
+
+    // GET /:ticker/exposure - Which indices hold a ticker
+    exposure(ticker: string): Promise<ApiResponse> {
+        return this._request("GET", `indices/${ticker}/exposure`);
     }
 }
 
 class EconAPI extends BaseAPI {
+    // GET /find - AI-powered FRED series search
+    find(query: string): Promise<ApiResponse> {
+        return this._request("GET", "econ/find", { query });
+    }
+
     search(query: string): Promise<ApiResponse> {
         return this._request("GET", "econ/search", { query });
     }
@@ -320,7 +359,7 @@ class EconAPI extends BaseAPI {
         return this._request("GET", `econ/dataset/${seriesId}`);
     }
 
-    calendar(params: { from?: string, to?: string, country?: string, minImportance?: number, currency?: string, category?: string } = {}): Promise<ApiResponse> {
+    calendar(params: { from?: string, to?: string, country?: string, minImportance?: number, currency?: string, category?: string, limit?: number } = {}): Promise<ApiResponse> {
         return this._request("GET", "econ/calendar", params);
     }
 }
@@ -413,6 +452,16 @@ class EarningsAPI extends BaseAPI {
     report(ticker: string, params: { year: string, quarter: string }): Promise<ApiResponse> {
         return this._request("GET", `earnings/${ticker}/report`, params);
     }
+
+    // GET /:ticker/transcript - Get earnings call transcript
+    transcript(ticker: string, params: { year: string, quarter: string }): Promise<ApiResponse> {
+        return this._request("GET", `earnings/${ticker}/transcript`, params);
+    }
+
+    // GET /transcript/sentiment - Get earnings transcript sentiment
+    transcriptSentiment(id: string): Promise<ApiResponse> {
+        return this._request("GET", "earnings/transcript/sentiment", { id });
+    }
 }
 
 
@@ -436,9 +485,34 @@ class FilingsAPI extends BaseAPI {
     search(params: { year: string, quarter: string, form?: string, ticker?: string }): Promise<ApiResponse> {
         return this._request("GET", "filings/search", params);
     }
+
+    // GET /document/text - Get raw text of a filing document
+    documentText(documentId: string): Promise<ApiResponse> {
+        return this._request("GET", "filings/document/text", { documentId });
+    }
+
+    // GET /document/sentiment - Get sentiment of a filing document
+    documentSentiment(documentId: string): Promise<ApiResponse> {
+        return this._request("GET", "filings/document/sentiment", { documentId });
+    }
 }
 
 class FinancialsAPI extends BaseAPI {
+    // GET /statements/:ticker/balance - Get balance sheet
+    balanceSheet(ticker: string, params: { year?: string, quarter?: string } = {}): Promise<ApiResponse> {
+        return this._request("GET", `financials/statements/${ticker}/balance`, params);
+    }
+
+    // GET /statements/:ticker/income - Get income statement
+    incomeStatement(ticker: string, params: { year?: string, quarter?: string } = {}): Promise<ApiResponse> {
+        return this._request("GET", `financials/statements/${ticker}/income`, params);
+    }
+
+    // GET /statements/:ticker/cashflow - Get cash flow statement
+    cashFlowStatement(ticker: string, params: { year?: string, quarter?: string } = {}): Promise<ApiResponse> {
+        return this._request("GET", `financials/statements/${ticker}/cashflow`, params);
+    }
+
     // GET /:ticker/revenue - Get revenue data
     revenue(ticker: string, params: { periods?: number } = {}): Promise<ApiResponse> {
         return this._request("GET", `financials/${ticker}/revenue`, params);
