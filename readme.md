@@ -239,6 +239,7 @@ await client.esg.data('AAPL');
 ```js
 await client.etfs.fund('SPY');
 await client.etfs.holdings('SPY');
+await client.etfs.holdingsAll('SPY');
 await client.etfs.exposure('SPY');
 await client.etfs.weights('SPY');
 await client.etfs.gainers({ limit: 5 });

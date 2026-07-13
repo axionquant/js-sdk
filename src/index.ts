@@ -47,6 +47,10 @@ class ETFAPI extends BaseAPI {
         return this._request("GET", `etfs/${ticker}/holdings`);
     }
 
+    holdingsAll(ticker: string): Promise<ApiResponse> {
+        return this._request("GET", `etfs/${ticker}/holdings/all`);
+    }
+
     exposure(ticker: string): Promise<ApiResponse> {
         return this._request("GET", `etfs/${ticker}/exposure`);
     }
