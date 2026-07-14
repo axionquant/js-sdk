@@ -586,6 +586,51 @@ class FinancialsAPI extends BaseAPI {
     snapshot(ticker: string): Promise<ApiResponse> {
         return this._request("GET", `financials/${ticker}/snapshot`);
     }
+
+    // GET /:ticker/eps - Get TTM earnings per share
+    eps(ticker: string, params: { from?: string, to?: string } = {}): Promise<ApiResponse> {
+        return this._request("GET", `financials/${ticker}/eps`, params);
+    }
+
+    // GET /:ticker/pe - Get price-to-earnings ratio
+    pe(ticker: string, params: { from?: string, to?: string, frame?: string } = {}): Promise<ApiResponse> {
+        return this._request("GET", `financials/${ticker}/pe`, params);
+    }
+
+    // GET /:ticker/marketcap - Get market capitalization
+    marketCap(ticker: string, params: { from?: string, to?: string, frame?: string } = {}): Promise<ApiResponse> {
+        return this._request("GET", `financials/${ticker}/marketcap`, params);
+    }
+
+    // GET /:ticker/roe - Get return on equity
+    roe(ticker: string, params: { from?: string, to?: string } = {}): Promise<ApiResponse> {
+        return this._request("GET", `financials/${ticker}/roe`, params);
+    }
+
+    // GET /:ticker/ev - Get enterprise value
+    enterpriseValue(ticker: string, params: { from?: string, to?: string, frame?: string } = {}): Promise<ApiResponse> {
+        return this._request("GET", `financials/${ticker}/ev`, params);
+    }
+
+    // GET /:ticker/ebitda - Get TTM EBITDA
+    ebitda(ticker: string, params: { from?: string, to?: string } = {}): Promise<ApiResponse> {
+        return this._request("GET", `financials/${ticker}/ebitda`, params);
+    }
+
+    // GET /:ticker/de - Get debt-to-equity ratio
+    debtToEquity(ticker: string, params: { from?: string, to?: string } = {}): Promise<ApiResponse> {
+        return this._request("GET", `financials/${ticker}/de`, params);
+    }
+
+    // GET /dcf/:ticker/value - Get DCF valuation
+    dcfValue(ticker: string): Promise<ApiResponse> {
+        return this._request("GET", `financials/dcf/${ticker}/value`);
+    }
+
+    // GET /dcf/:ticker/rate - Get discount rate / WACC
+    dcfRate(ticker: string): Promise<ApiResponse> {
+        return this._request("GET", `financials/dcf/${ticker}/rate`);
+    }
 }
 
 class InsidersAPI extends BaseAPI {

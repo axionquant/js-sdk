@@ -124,6 +124,19 @@ await client.financials.sharesOutstandingBasic('AAPL');
 await client.financials.sharesOutstandingDiluted('AAPL');
 await client.financials.metrics('AAPL');
 await client.financials.snapshot('AAPL');
+
+// Historical valuation ratios
+await client.financials.eps('AAPL', { from: '2024-01-01', to: '2024-12-31' });
+await client.financials.pe('AAPL');
+await client.financials.marketCap('AAPL');
+await client.financials.roe('AAPL');
+await client.financials.enterpriseValue('AAPL');
+await client.financials.ebitda('AAPL');
+await client.financials.debtToEquity('AAPL');
+
+// DCF analysis
+await client.financials.dcfValue('AAPL');
+await client.financials.dcfRate('AAPL');
 ```
 
 ### Earnings
