@@ -471,22 +471,22 @@ class EarningsAPI extends BaseAPI {
 
 class FilingsAPI extends BaseAPI {
     // GET /:ticker - Get recent filings for a company
-    filings(ticker: string, params: { limit?: number, form?: string } = {}): Promise<ApiResponse> {
+    recent(ticker: string, params: { limit?: number, form?: string } = {}): Promise<ApiResponse> {
         return this._request("GET", `filings/${ticker}`, params);
     }
 
-    // GET /:ticker/forms/:formType - Get specific form type filings
-    forms(ticker: string, formType: string, params: { year?: string, quarter?: string, limit?: number } = {}): Promise<ApiResponse> {
-        return this._request("GET", `filings/${ticker}/forms/${formType}`, params);
+    // GET /:ticker/:formType - Get specific form type filings by date range
+    history(ticker: string, formType: string, params: { startDate: string, endDate?: string }): Promise<ApiResponse> {
+        return this._request("GET", `filings/${ticker}/${formType}`, params);
     }
 
-    // GET /desc/forms - List available form types and their descriptions
-    descForms(): Promise<ApiResponse> {
-        return this._request("GET", "filings/desc/forms");
+    // GET /list/forms - List available form types and their descriptions
+    listForms(): Promise<ApiResponse> {
+        return this._request("GET", "filings/list/forms");
     }
 
     // GET /search - Search filings by year/quarter
-    search(params: { year: string, quarter: string, form?: string, ticker?: string }): Promise<ApiResponse> {
+    search(params: { ticker?: string, form?: string, year: string, quarter: string }): Promise<ApiResponse> {
         return this._request("GET", "filings/search", params);
     }
 

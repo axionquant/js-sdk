@@ -154,16 +154,16 @@ await client.earnings.transcriptSentiment('base64-encoded-id');
 
 ```js
 // Get recent filings
-await client.filings.filings('AAPL', { limit: 10, form: '10-K' });
+await client.filings.recent('AAPL', { limit: 10, form: '10-K' });
 
-// Get specific form type
-await client.filings.forms('AAPL', '10-K', { year: '2024', quarter: 'Q1' });
+// Get filing history by form type and date range
+await client.filings.history('AAPL', '10-Q', { startDate: '2024-01-01', endDate: '2024-03-31' });
 
 // List available form types
-await client.filings.descForms();
+await client.filings.listForms();
 
 // Search filings by year/quarter
-await client.filings.search({ year: '2024', quarter: 'Q1', form: '10-Q', ticker: 'AAPL' });
+await client.filings.search({ ticker: 'AAPL', form: '10-Q', year: '2024', quarter: 'Q1' });
 
 // Get document text/sentiment
 await client.filings.documentText('document-id');
