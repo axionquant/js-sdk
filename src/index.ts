@@ -471,7 +471,7 @@ class EarningsAPI extends BaseAPI {
 
 class FilingsAPI extends BaseAPI {
     // GET /:ticker - Get recent filings for a company
-    recent(ticker: string, params: { limit?: number, form?: string } = {}): Promise<ApiResponse> {
+    recent(ticker: string, params: { form?: string, limit?: number } = {}): Promise<ApiResponse> {
         return this._request("GET", `filings/${ticker}`, params);
     }
 

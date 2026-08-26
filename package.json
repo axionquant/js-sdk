@@ -1,7 +1,7 @@
 {
   "name": "@axionquant/sdk",
-  "version": "1.1.8",
-  "description": "Axion SDK for Node.js",
+  "version": "1.1.9",
+  "description": "Official TypeScript/JavaScript SDK for the AxionQuant financial data API. Real-time and historical stock, crypto, forex, futures, and economic data, plus SEC filings, earnings, and company financials.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
@@ -18,12 +18,30 @@
     "typescript": "^5.0.0"
   },
   "keywords": [
+    "axionquant",
+    "axion",
     "financial-data",
-    "stocks",
-    "crypto",
-    "etf"
+    "financial-api",
+    "stock-api",
+    "stock-market-api",
+    "market-data",
+    "crypto-api",
+    "cryptocurrency",
+    "forex-api",
+    "futures-api",
+    "etf",
+    "sec-filings",
+    "earnings",
+    "economic-data",
+    "fred",
+    "quant",
+    "quantitative-finance",
+    "trading-api",
+    "typescript",
+    "sdk",
+    "nodejs"
   ],
-  "author": "Axion",
+  "author": "AxionQuant (https://axionquant.com)",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -32,5 +50,5 @@
   "bugs": {
     "url": "https://github.com/axionquant/js-sdk/issues"
   },
-  "homepage": "https://github.com/axionquant/js-sdk#readme"
+  "homepage": "https://axionquant.com"
 }

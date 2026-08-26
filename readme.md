@@ -1,6 +1,49 @@
-# Axion SDK
+# AxionQuant SDK
 
-A TypeScript/JavaScript SDK for the [Axion](https://axionquant.com) financial data API.
+**The official TypeScript/JavaScript SDK for [AxionQuant](https://axionquant.com)** - a single financial data API for stocks, crypto, forex, futures, indices, ETFs, economic data, SEC filings, earnings, insider trading, and company financials.
+
+[![npm version](https://img.shields.io/npm/v/@axionquant/sdk.svg)](https://www.npmjs.com/package/@axionquant/sdk)
+[![npm downloads](https://img.shields.io/npm/dm/@axionquant/sdk.svg)](https://www.npmjs.com/package/@axionquant/sdk)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](#license)
+
+AxionQuant (Axion) gives developers real-time and historical market data, fundamental financial statements, earnings call transcripts, SEC filings, insider trading activity, economic indicators, and more - all through one typed, promise-based Node.js client.
+
+## Why AxionQuant?
+
+- **All asset classes in one SDK** - stocks, crypto, forex, futures, indices, and ETFs
+- **Fundamental & alternative data** - financial statements, earnings, SEC filings, insider trading, ESG, credit ratings, web traffic, and supply chain data
+- **Macro & economic data** - natural-language FRED dataset search and economic calendars
+- **Built for TypeScript** - fully typed requests and responses
+- **Simple, consistent API** - one client, one auth pattern, promise-based methods across every module
+
+## Table of Contents
+
+- [Installation](#installation)
+- [Quick Start](#quick-start)
+- [Authentication](#authentication)
+- [API Reference](#api-reference)
+  - [Stocks](#stocks)
+  - [Crypto](#crypto)
+  - [Forex](#forex)
+  - [Futures](#futures)
+  - [Indices](#indices)
+  - [Financials](#financials)
+  - [Earnings](#earnings)
+  - [Filings](#filings)
+  - [Insiders](#insiders)
+  - [Company Profiles](#company-profiles)
+  - [Sentiment](#sentiment)
+  - [News](#news)
+  - [Economic Data](#economic-data)
+  - [Credit](#credit)
+  - [ESG](#esg)
+  - [ETFs](#etfs)
+  - [Supply Chain](#supply-chain)
+  - [Web Traffic](#web-traffic)
+- [Error Handling](#error-handling)
+- [FAQ](#faq)
+- [Get Started](#get-started)
+- [License](#license)
 
 ## Installation
 
@@ -10,7 +53,7 @@ npm install @axionquant/sdk
 
 ## Quick Start
 
-[Get your free API key](https://axionquant.com/dashboard/api-keys)
+[Get your free AxionQuant API key](https://axionquant.com/dashboard/api-keys)
 
 ```js
 const { Axion } = require('@axionquant/sdk');
@@ -30,7 +73,7 @@ const prices = await client.stocks.prices('AAPL', {
 
 ## Authentication
 
-Most endpoints require an API key. Pass it when initializing the client:
+Most endpoints require an AxionQuant API key. Pass it when initializing the client:
 
 ```js
 const client = new Axion('your-api-key');
@@ -39,6 +82,8 @@ const client = new Axion('your-api-key');
 ## API Reference
 
 ### Stocks
+
+Real-time stock quotes, historical price data, ticker lookups, and top gainers/losers.
 
 ```js
 // Get all stock tickers
@@ -60,6 +105,8 @@ await client.stocks.quote('AAPL');
 
 ### Crypto
 
+Cryptocurrency price data, quotes, and market movers.
+
 ```js
 await client.crypto.tickers({ type: 'coin' });
 await client.crypto.ticker('BTC');
@@ -70,6 +117,8 @@ await client.crypto.quote('BTC');
 ```
 
 ### Forex
+
+Foreign exchange rates and currency pair data.
 
 ```js
 await client.forex.tickers({ country: 'US' });
@@ -82,6 +131,8 @@ await client.forex.quote('EURUSD');
 
 ### Futures
 
+Futures contract pricing and market data.
+
 ```js
 await client.futures.tickers({ exchange: 'CME' });
 await client.futures.ticker('ES');
@@ -93,6 +144,8 @@ await client.futures.quote('ES');
 
 ### Indices
 
+Market index data, constituents, and exposure.
+
 ```js
 await client.indices.tickers({ exchange: 'NYSE' });
 await client.indices.ticker('SPX');
@@ -102,6 +155,8 @@ await client.indices.exposure('AAPL');
 ```
 
 ### Financials
+
+Financial statements, historical fundamentals, valuation ratios, and DCF analysis.
 
 ```js
 // Financial statements (balance sheet, income, cash flow)
@@ -141,6 +196,8 @@ await client.financials.dcfRate('AAPL');
 
 ### Earnings
 
+Earnings history, trends, reports, and call transcripts with sentiment analysis.
+
 ```js
 await client.earnings.history('AAPL');
 await client.earnings.trend('AAPL');
@@ -152,9 +209,11 @@ await client.earnings.transcriptSentiment('base64-encoded-id');
 
 ### Filings
 
+SEC filings search, history, and full-text document access.
+
 ```js
 // Get recent filings
-await client.filings.recent('AAPL', { limit: 10, form: '10-K' });
+await client.filings.recent('AAPL', { form: '10-K', limit: 10 });
 
 // Get filing history by form type and date range
 await client.filings.history('AAPL', '10-Q', { startDate: '2024-01-01', endDate: '2024-03-31' });
@@ -172,6 +231,8 @@ await client.filings.documentSentiment('document-id');
 
 ### Insiders
 
+Insider trading activity, institutional and fund ownership data.
+
 ```js
 await client.insiders.funds('AAPL');
 await client.insiders.individuals('AAPL');
@@ -182,6 +243,8 @@ await client.insiders.transactions('AAPL');
 ```
 
 ### Company Profiles
+
+Company overviews, analyst recommendations, and key statistics.
 
 ```js
 await client.profiles.profile('AAPL');
@@ -194,6 +257,8 @@ await client.profiles.calendar('AAPL');
 
 ### Sentiment
 
+Social, news, and analyst sentiment scoring.
+
 ```js
 await client.sentiment.all('AAPL');
 await client.sentiment.social('AAPL');
@@ -203,6 +268,8 @@ await client.sentiment.analyst('AAPL');
 
 ### News
 
+Market news by company, country, and category.
+
 ```js
 await client.news.general();
 await client.news.company('AAPL');
@@ -211,6 +278,8 @@ await client.news.category('technology');
 ```
 
 ### Economic Data
+
+Macroeconomic indicators, FRED dataset search, and economic calendars.
 
 ```js
 // AI-powered FRED dataset finder (natural language)
@@ -236,6 +305,8 @@ await client.econ.calendar({
 
 ### Credit
 
+Credit ratings and entity search.
+
 ```js
 await client.credit.search('Apple Inc');
 await client.credit.ratings('entity-id');
@@ -243,11 +314,15 @@ await client.credit.ratings('entity-id');
 
 ### ESG
 
+Environmental, social, and governance (ESG) data.
+
 ```js
 await client.esg.data('AAPL');
 ```
 
 ### ETFs
+
+ETF holdings, exposure, weights, and market movers.
 
 ```js
 await client.etfs.fund('SPY');
@@ -262,6 +337,8 @@ await client.etfs.quote('SPY');
 
 ### Supply Chain
 
+Company customer, supplier, and peer relationships.
+
 ```js
 await client.supplyChain.customers('AAPL');
 await client.supplyChain.peers('AAPL');
@@ -269,6 +346,8 @@ await client.supplyChain.suppliers('AAPL');
 ```
 
 ### Web Traffic
+
+Website traffic estimates by company.
 
 ```js
 await client.webTraffic.traffic('AAPL');
@@ -285,9 +364,23 @@ try {
 }
 ```
 
+## FAQ
+
+**What is AxionQuant?**
+AxionQuant (Axion) is a financial data API and SDK that provides stock, crypto, forex, futures, and economic data alongside company fundamentals, SEC filings, and earnings data through a single client.
+
+**Does the AxionQuant SDK support TypeScript?**
+Yes. The SDK is written for TypeScript/JavaScript and works in any Node.js project.
+
+**Is there a free AxionQuant API key?**
+Yes - you can [get a free API key](https://axionquant.com/dashboard/api-keys) from the AxionQuant dashboard.
+
+**What markets and data types does Axion cover?**
+Stocks, crypto, forex, futures, indices, and ETFs, plus financial statements, earnings transcripts, SEC filings, insider trading, sentiment, news, economic (FRED) data, credit ratings, ESG scores, supply chain relationships, and web traffic estimates.
+
 ## Get Started
 
-For detailed API documentation, support, or to obtain an API key, visit the [Axion](https://axionquant.com) website.
+For detailed API documentation, support, or to obtain an API key, visit [AxionQuant](https://axionquant.com).
 
 ## License
 
