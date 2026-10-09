@@ -1,6 +1,6 @@
 {
   "name": "@axionquant/sdk",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Official TypeScript/JavaScript SDK for the AxionQuant financial data API. Real-time and historical stock, crypto, forex, futures, and economic data, plus SEC filings, earnings, and company financials.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
