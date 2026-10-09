@@ -350,7 +350,7 @@ class IndicesAPI extends BaseAPI {
 }
 
 class EconAPI extends BaseAPI {
-    // GET /find - AI-powered FRED series search
+    // GET /econ/find - FRED series search
     find(query: string): Promise<ApiResponse> {
         return this._request("GET", "econ/find", { query });
     }
@@ -387,10 +387,6 @@ class NewsAPI extends BaseAPI {
 }
 
 class SentimentAPI extends BaseAPI {
-    all(ticker: string): Promise<ApiResponse> {
-        return this._request("GET", `sentiment/${ticker}/all`);
-    }
-
     social(ticker: string): Promise<ApiResponse> {
         return this._request("GET", `sentiment/${ticker}/social`);
     }

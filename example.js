@@ -120,7 +120,7 @@ async function runExamples() {
 
         // --- 10. Sentiment Analysis Examples ---
         console.log('10. Sentiment Analysis Examples:');
-        const sentiment = await client.getSentimentAll('AAPL');
+        const sentiment = await client.sentiment.news('AAPL');
         console.log('AAPL Sentiment Data:', Object.keys(sentiment.data));
         console.log();
 

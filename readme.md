@@ -260,7 +260,6 @@ await client.profiles.calendar('AAPL');
 Social, news, and analyst sentiment scoring.
 
 ```js
-await client.sentiment.all('AAPL');
 await client.sentiment.social('AAPL');
 await client.sentiment.news('AAPL');
 await client.sentiment.analyst('AAPL');
@@ -282,7 +281,7 @@ await client.news.category('technology');
 Macroeconomic indicators, FRED dataset search, and economic calendars.
 
 ```js
-// AI-powered FRED dataset finder (natural language)
+// FRED dataset finder (natural language)
 await client.econ.find('semiconductor spending');
 
 // Search datasets
